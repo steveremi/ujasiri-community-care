@@ -1,0 +1,207 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Ujasiri Community Care (UCC) — Design System
+   Palette: pure navy + light blue + white. Nothing else on brand surfaces.
+   Red appears only for genuine error states, which no colour system should
+   give up.
+   ========================================================================== */
+
+@theme {
+  /* --- Navy: pure, saturated blue. The brand's backbone. ---------------- */
+  --color-navy-50: #eef4ff;
+  --color-navy-100: #dbe7ff;
+  --color-navy-200: #bcd3ff;
+  --color-navy-300: #8fb5ff;
+  --color-navy-400: #5b8dff;
+  --color-navy-500: #3366f5;
+  --color-navy-600: #1f47e0;
+  --color-navy-700: #1935b8;
+  --color-navy-800: #122a8f;
+  --color-navy-900: #001f5b;
+  --color-navy-950: #00103a;
+
+  /* --- Sky blue: the light blue. Accents, calls to action, highlights.
+     Cyan-leaning rather than violet-leaning, which is what separates "sky"
+     from a second navy and gives the palette its lift against the deep
+     brand blue. ------------------------------------------------------- */
+  --color-azure-50: #f0f9ff;
+  --color-azure-100: #dff2fe;
+  --color-azure-200: #b8e6fe;
+  --color-azure-300: #7dd3fc;
+  --color-azure-400: #38bdf8;
+  --color-azure-500: #0ea5e9;
+  --color-azure-600: #0284c7;
+  --color-azure-700: #0369a1;
+  --color-azure-800: #075985;
+  --color-azure-900: #0c4a6e;
+  --color-azure-950: #082f49;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-card: 0 1px 2px rgb(0 16 58 / 0.05), 0 10px 28px -14px rgb(0 16 58 / 0.18);
+  --shadow-lift: 0 2px 6px rgb(0 16 58 / 0.08), 0 22px 48px -18px rgb(0 16 58 / 0.28);
+  --shadow-glow: 0 8px 32px -8px rgb(37 150 245 / 0.45);
+
+  --radius-card: 1rem;
+
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-kenburns: kenburns 7s ease-out both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Slow drift applied to the active hero slide, so a still photograph still
+     feels alive without anything actually moving under the reader's eye. */
+  @keyframes kenburns {
+    from {
+      transform: scale(1.04) translate3d(0, 0, 0);
+    }
+    to {
+      transform: scale(1.14) translate3d(-1.6%, -1.8%, 0);
+    }
+  }
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: var(--color-navy-950);
+}
+
+/* The public site is a deliberately light, high-clarity experience — donors
+   scan it in daylight on phones. We opt out of OS dark mode rather than ship a
+   half-considered second palette. */
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  /* The whole interface runs heavier than default: 500 is the new "regular",
+     which is what gives the UI its solid, confident weight. */
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings are heavy and tightly tracked — this is the single largest
+   contributor to the site reading as bold rather than generic. */
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+strong,
+b {
+  font-weight: 700;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-azure-500);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--color-azure-200);
+  color: var(--color-navy-950);
+}
+
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  max-width: 82rem;
+
+  @media (width >= 64rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Long-form editorial content (stories, reports, policy pages). */
+@utility prose-ucc {
+  & p {
+    margin-block: 1.15em;
+    line-height: 1.75;
+    color: var(--color-navy-800);
+  }
+  & h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-block: 2em 0.6em;
+    color: var(--color-navy-950);
+    letter-spacing: -0.025em;
+  }
+  & h3 {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-block: 1.6em 0.5em;
+    color: var(--color-navy-950);
+  }
+  & ul,
+  & ol {
+    margin-block: 1.15em;
+    padding-inline-start: 1.5rem;
+    line-height: 1.75;
+    color: var(--color-navy-800);
+  }
+  & ul {
+    list-style: disc;
+  }
+  & ol {
+    list-style: decimal;
+  }
+  & li {
+    margin-block: 0.4em;
+  }
+  & a {
+    color: var(--color-azure-700);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  & blockquote {
+    margin-block: 1.6em;
+    padding-inline-start: 1.25rem;
+    border-inline-start: 4px solid var(--color-azure-400);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-navy-950);
+  }
+  & img {
+    border-radius: var(--radius-card);
+    margin-block: 1.75em;
+  }
+  & strong {
+    color: var(--color-navy-950);
+    font-weight: 700;
+  }
+}
