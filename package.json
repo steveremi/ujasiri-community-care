@@ -9,7 +9,7 @@
     "lint": "eslint",
     "seed": "node --env-file=.env.local --experimental-strip-types scripts/seed.ts",
     "check:rbac": "node --env-file=.env.local --experimental-strip-types scripts/check-rbac.ts",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "verify": "npm run typecheck && npm run lint"
   },
   "dependencies": {
