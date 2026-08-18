@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 
+import { isDemoMode } from "@/lib/env";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -58,17 +59,23 @@ export const metadata: Metadata = {
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
-  },
+  // Mirrors src/app/robots.ts. On fixture content the site is noindex from
+  // both directions, because robots.txt asks a crawler not to fetch a page
+  // while this asks it not to index one it reached another way — a shared
+  // link, a referrer, a crawler that ignores robots.txt.
+  robots: isDemoMode
+    ? { index: false, follow: false, googleBot: { index: false, follow: false } }
+    : {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+          "max-video-preview": -1,
+        },
+      },
   category: "nonprofit",
   formatDetection: { telephone: true, address: true, email: true },
 };
